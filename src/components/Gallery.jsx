@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image1 from "./Image1";
 import Image2 from "./Image2";
+import { FaRegImage } from "react-icons/fa";
 
 function Gallery() {
   const [images, setImages] = useState([
@@ -98,6 +99,23 @@ function Gallery() {
             />
           )
         )}
+        <label htmlFor="fileInput" className="cursor-pointer">
+          <div className="w-full h-full border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center">
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleAddImage}
+            />
+
+            <FaRegImage size={70} />
+
+            <p className="text-gray-500 mt-4 text-xl font-semibold">
+              Add Images
+            </p>
+          </div>
+        </label>
       </div>
     </>
   );
