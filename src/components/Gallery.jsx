@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Image1 from "./Image1";
-import Image2 from "./Image2";
+import Image from "./Image";
 import { FaRegImage } from "react-icons/fa";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function Gallery() {
   const [images, setImages] = useState([
@@ -46,6 +46,18 @@ function Gallery() {
     }
   };
 
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return; // Drop was not successful
+    }
+
+    const reorderedImages = [...images];
+    const [movedImage] = reorderedImages.splice(result.source.index, 1);
+    reorderedImages.splice(result.destination.index, 0, movedImage);
+
+    setImages(reorderedImages);
+  };
+
   return (
     <>
       <div className="bg-white p-6  top-0 border border-b-1">
@@ -80,25 +92,15 @@ function Gallery() {
         </div>
       </div>
       <div className="min-w-full p-5 bg-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-6">
-        {images.map((item, index) =>
-          index === 0 ? (
-            <Image1
-              key={item.id}
-              imageData={item}
-              setImages={setImages}
-              images={images}
-              index={index}
-            />
-          ) : (
-            <Image2
-              key={item.id}
-              imageData={item}
-              setImages={setImages}
-              images={images}
-              index={index}
-            />
-          )
-        )}
+        {images.map((item, index) => (
+          <Image
+            key={item.id}
+            imageData={item}
+            setImages={setImages}
+            images={images}
+            index={index}
+          />
+        ))}
         <label htmlFor="fileInput" className="cursor-pointer">
           <div className="w-full h-full border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center">
             <input
