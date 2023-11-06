@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Image from "./Image";
 import { FaRegImage } from "react-icons/fa";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function Gallery() {
   const [images, setImages] = useState([
@@ -44,18 +43,6 @@ function Gallery() {
 
       e.target.value = null;
     }
-  };
-
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return; // Drop was not successful
-    }
-
-    const reorderedImages = [...images];
-    const [movedImage] = reorderedImages.splice(result.source.index, 1);
-    reorderedImages.splice(result.destination.index, 0, movedImage);
-
-    setImages(reorderedImages);
   };
 
   return (
